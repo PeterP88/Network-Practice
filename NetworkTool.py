@@ -1,14 +1,21 @@
-import subprocess
 import ipaddress
+import subprocess
+import platform
+
+
+def is_ip_in_network(ip, network):
+    return ip in network
+
+
+def ping(ip):
+    param = "-n" if platform.system().lower() == 'windows' else '-c'
+
 
 if __name__ == '__main__':
 
-    #saving network cidr
     network_cidr = "192.168.1.0/24"
 
-    #creates a network object from the network cidr
     network = ipaddress.ip_network(network_cidr)
 
-
-
-
+    for ip in network:
+        print(f"IP {ip} is on the network: {is_ip_in_network(ip, network)}")
